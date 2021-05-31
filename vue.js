@@ -6,6 +6,7 @@ const App = {
 	data() {
 		return {
 			activeIndex: 1, // то, что позволяет определить текущий активный шаг
+			isFinish: false,
 			steps: [
 				{
 					title: 'Основы',
@@ -41,11 +42,11 @@ const App = {
 		},
 		reset() {
 			this.activeIndex = 1;
+			this.isFinish = false;
 		},
 		nextOfFinish() {
-			if (this.activeIndex < 5) {
-				this.activeIndex++;
-			}
+			if (this.activeIndex < 5) this.activeIndex++;
+			else this.isFinish = true;
 		},
 		setActive(step) {
 			this.activeIndex = step;
@@ -55,7 +56,12 @@ const App = {
 		isDisable() {
 			return this.activeIndex <= 1;
 		},
-		isActiveStep() {},
+		isActiveStep() {
+			return (step) => this.activeIndex === step;
+		},
+		isLastStep() {
+			return this.activeIndex < 5 ? 'Вперед' : 'Завершить';
+		},
 		// тут стоит определить несколько свойств:
 		// 1. текущий выбранный шаг
 		// 2. выключена ли кнопка назад
